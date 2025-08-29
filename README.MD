@@ -1,6 +1,6 @@
 # Simple SEO Content Optimizer with Claude
 
-A professional-grade desktop application that leverages Claude API and intelligent web research to automatically enhance content for search engine optimization. The tool systematically analyzes high-performing content to identify strategic keywords and seamlessly integrates them into your text.
+A simple desktop application that leverages Claude API and intelligent web research to automatically enhance content for search engine optimization. The tool systematically analyzes high-performing content to identify strategic keywords and seamlessly integrates them into your text.
 
 ![Python](https://img.shields.io/badge/python-v3.8+-blue.svg)
 ![PySide6](https://img.shields.io/badge/PySide6-6.0+-green.svg)
