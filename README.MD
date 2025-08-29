@@ -31,8 +31,8 @@ aiohttp>=3.7.0
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/yourusername/seo-optimizer.git
-   cd seo-optimizer
+   git clone https://github.com/from-day-dream/Simple-SEO-Optimizer-with-Claude-API.git
+   cd Simple-SEO-Optimizer-with-Claude-API
    ```
 
 2. **Install dependencies**
@@ -44,7 +44,7 @@ aiohttp>=3.7.0
 3. **Set up assets folder**
 
    ```
-   seo-optimizer/
+   Simple-SEO-Optimizer-with-Claude-API/
    ├── optimizer.py
    └── assets/
        ├── logo.svg
