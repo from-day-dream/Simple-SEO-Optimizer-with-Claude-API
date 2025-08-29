@@ -6,7 +6,7 @@ A simple desktop application that leverages Claude API and intelligent web resea
 ![PySide6](https://img.shields.io/badge/PySide6-6.0+-green.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 
-## 🚀 Features
+## Features
 
 ### Core Functionality
 
@@ -24,7 +24,7 @@ keyring>=23.0.0
 aiohttp>=3.7.0
 ```
 
-## 🛠 Installation
+## Installation
 
 ### Method 1: From Source
 
@@ -60,7 +60,7 @@ aiohttp>=3.7.0
 
 Download the prebuilt executable from Releases and run (currently only for Windows. Mac & Linux coming soon).
 
-## ⚙️ Configuration
+## Configuration
 
 ### Claude API Setup
 
@@ -69,7 +69,7 @@ Download the prebuilt executable from Releases and run (currently only for Windo
 3. Launch the application and enter your API key
 4. Click "Save Key" to store it securely
 
-## 🎯 Usage
+## Usage
 
 ### Basic Workflow
 
@@ -97,11 +97,11 @@ Download the prebuilt executable from Releases and run (currently only for Windo
 6. Push to the branch (`git push origin feature/amazing-feature`)
 7. Open a Pull Request
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🆘 Support
+## Support
 
 ### Common Issues
 
