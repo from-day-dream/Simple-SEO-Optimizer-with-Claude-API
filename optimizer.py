@@ -16,6 +16,28 @@ import requests
 from bs4 import BeautifulSoup
 import re
 
+def get_resource_path(relative_path):
+    """Get absolute path to resource, works for dev and for PyInstaller"""
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+        # Check if file exists in temp folder (packaged)
+        temp_file = os.path.join(base_path, relative_path)
+        if os.path.exists(temp_file):
+            return temp_file
+    except Exception:
+        pass
+    
+    # Fallback: look relative to executable location
+    if getattr(sys, 'frozen', False):
+        # Running as executable
+        base_path = os.path.dirname(sys.executable)
+    else:
+        # Running as script
+        base_path = os.path.abspath(".")
+    
+    return os.path.join(base_path, relative_path)
+
 class SearchResult:
     def __init__(self, title: str, description: str, url: str = ""):
         self.title = title
@@ -195,16 +217,16 @@ class SEOOptimizerApp(QMainWindow):
         
         # Compact header with logo and title
         header_layout = QHBoxLayout()
-        header_layout.setSpacing(2)  # Reduced spacing between logo and text
+        header_layout.setSpacing(8)  # Reduced spacing between logo and text
         
         # Create SVG logo using QLabel with rendered SVG
         logo_label = QLabel()
-        logo_label.setFixedSize(30, 30)
+        logo_label.setFixedSize(40, 40)
         logo_label.setCursor(Qt.PointingHandCursor)
-        logo_label.mousePressEvent = lambda event: QDesktopServices.openUrl(QUrl("https://day-dream.studio"))
+        logo_label.mousePressEvent = lambda event: QDesktopServices.openUrl(QUrl("https://day-dream.ai"))
         
         # Load and render SVG
-        svg_pixmap = self.load_svg_as_pixmap("assets/logo.svg", 30, 30)
+        svg_pixmap = self.load_svg_as_pixmap("assets/logo.svg", 40, 40)
         if svg_pixmap:
             logo_label.setPixmap(svg_pixmap)
         else:
@@ -216,7 +238,7 @@ class SEOOptimizerApp(QMainWindow):
         # Title with tighter spacing
         title_label = QLabel("SEO Optimiser from day-dream")
         title_label.setObjectName("title")
-        title_label.setFont(QFont(self.get_font_family(), 24))
+        title_label.setFont(QFont(self.get_font_family(), 18, QFont.Bold))
         title_label.setContentsMargins(0, 0, 0, 0)  # Remove margins
         header_layout.addWidget(title_label)
         
@@ -369,7 +391,7 @@ class SEOOptimizerApp(QMainWindow):
                 selection-color: #ffffff;
             }
             QLineEdit:focus {
-                border: 2px solid #66B3FF;
+                border: 1px solid #66B3FF;
                 background-color: #333333;
             }
             QProgressBar {
@@ -386,7 +408,7 @@ class SEOOptimizerApp(QMainWindow):
             }
             QSplitter::handle {
                 background-color: transparent;
-                width: 0px;
+                width: 3px;
             }
             QSplitter::handle:hover {
                 background-color: transparent;
@@ -439,10 +461,22 @@ class SEOOptimizerApp(QMainWindow):
     def load_custom_fonts(self):
         """Load custom fonts from files or use system fonts"""
         # Load Manrope-Regular font
-        font_id = QFontDatabase.addApplicationFont("assets/Manrope-Regular.ttf")
+        font_id = QFontDatabase.addApplicationFont(get_resource_path("assets/Manrope-Regular.ttf"))
         if font_id != -1:
-            self.custom_font_family = QFontDatabase.applicationFontFamilies(font_id)[0]
-            print(f"Successfully loaded custom font: {self.custom_font_family}")
+            font_families = QFontDatabase.applicationFontFamilies(font_id)
+            if font_families:
+                self.custom_font_family = font_families[0]
+                
+                # Set font rendering hints for better antialiasing
+                font = QFont(self.custom_font_family)
+                font.setStyleStrategy(QFont.PreferAntialias)
+                font.setHintingPreference(QFont.PreferNoHinting)
+                QApplication.instance().setFont(font)
+                
+                print(f"Successfully loaded custom font: {self.custom_font_family}")
+            else:
+                print("Font loaded but no families available")
+                self.custom_font_family = self.get_best_available_font()
         else:
             print("Failed to load custom font, using system font fallback")
             self.custom_font_family = self.get_best_available_font()
@@ -597,7 +631,16 @@ class SEOOptimizerApp(QMainWindow):
         self.progress_bar.setVisible(False)
 
 def main():
+    # Enable high DPI scaling and font antialiasing
+    QApplication.setHighDpiScaleFactorRoundingPolicy(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
+    
     app = QApplication(sys.argv)
+    
+    # Force font antialiasing and subpixel rendering
+    font = app.font()
+    font.setStyleStrategy(QFont.PreferAntialias)
+    font.setHintingPreference(QFont.PreferNoHinting)
+    app.setFont(font)
     
     # Set application properties
     app.setApplicationName("SEO Optimizer")
