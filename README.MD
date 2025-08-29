@@ -53,7 +53,7 @@ aiohttp>=3.7.0
 
 4. **Run the application**
    ```bash
-   python seo_optimizer.py
+   python optimizer.py
    ```
 
 ### Method 2: Executable
