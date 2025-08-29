@@ -45,7 +45,7 @@ aiohttp>=3.7.0
 
    ```
    seo-optimizer/
-   ├── seo_optimizer.py
+   ├── optimizer.py
    └── assets/
        ├── logo.svg
        └── Manrope-Regular.ttf
